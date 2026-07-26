@@ -1,72 +1,73 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="popup.css">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="header">
-    <button class="settings-btn" id="settingsBtn" title="Настройки">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-      </svg>
-    </button>
-  </div>
+	<div class="header">
+		<button class="settings-btn" id="settingsBtn" title="Настройки">
+			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="3"/>
+				<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+			</svg>
+		</button>
+	</div>
 
-  <div class="volume-display">
-    <div class="volume-value" id="volumeValue">100%</div>
-  </div>
+	<div class="volume-display">
+		<div class="volume-value" id="volumeValue">100%</div>
+	</div>
 
-  <div class="slider-container">
-    <div class="slider-track">
-      <div class="slider-fill" id="sliderFill"></div>
-    </div>
-    <input type="range" id="volumeSlider" min="0" max="200" value="100" step="1">
-  </div>
+	<div class="slider-container">
+		<div class="slider-track">
+			<div class="slider-fill" id="sliderFill"></div>
+		</div>
+		<input type="range" id="volumeSlider" min="0" max="200" value="100" step="1">
+	</div>
 
-  <div class="controls">
-    <button class="btn btn-mute" id="muteBtn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-      </svg>
-      Mute
-    </button>
-    <button class="btn btn-reset" id="resetBtn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="1 4 1 10 7 10"/>
-        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-      </svg>
-      Reset
-    </button>
-  </div>
+	<div class="controls">
+		<button class="btn btn-mute" id="muteBtn">
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+				<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+			</svg>
+			Mute
+		</button>
+		<button class="btn btn-reset" id="resetBtn">
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<polyline points="1 4 1 10 7 10"/>
+				<path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+			</svg>
+			Reset
+		</button>
+	</div>
 
-  <div class="presets">
-    <button class="preset" data-value="25">25%</button>
-    <button class="preset" data-value="50">50%</button>
-    <button class="preset" data-value="100">100%</button>
-    <button class="preset" data-value="150">150%</button>
-    <button class="preset" data-value="200">200%</button>
-  </div>
+	<div class="presets">
+		<button class="preset" data-value="25">25%</button>
+		<button class="preset" data-value="50">50%</button>
+		<button class="preset" data-value="100">100%</button>
+		<button class="preset" data-value="150">150%</button>
+		<button class="preset" data-value="200">200%</button>
+	</div>
 
-  <div class="settings-panel" id="settingsPanel">
-    <div class="setting-row">
-      <span class="setting-label">Display mode</span>
-      <div class="mode-selector">
-        <button class="mode-option active" data-mode="percent">%</button>
-        <button class="mode-option" data-mode="db">dB</button>
-      </div>
-    </div>
-    <div class="setting-row">
-      <span class="setting-label">Accent color</span>
-      <div class="color-picker-wrapper">
-        <input type="color" id="colorPicker" value="#eae0ff">
-        <span class="color-value" id="colorValue">#EAE0FF</span>
-      </div>
-    </div>
-  </div>
+	<div class="settings-panel" id="settingsPanel">
+		<div class="setting-row">
+			<span class="setting-label">Display mode</span>
+			<div class="mode-selector">
+				<button class="mode-option active" data-mode="percent">%</button>
+				<button class="mode-option" data-mode="db">dB</button>
+			</div>
+		</div>
+		<div class="setting-row">
+			<span class="setting-label">Accent color</span>
+			<div class="color-picker-wrapper">
+				<input type="color" id="colorPicker" value="#eae0ff">
+				<span class="color-value" id="colorValue">#EAE0FF</span>
+			</div>
+		</div>
+	</div>
 
-  <script src="popup.js"></script>
+	<script src="browser-polyfill.min.js"></script>
+	<script src="popup.js"></script>
 </body>
 </html>
