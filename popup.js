@@ -1,7 +1,6 @@
 (async function() {
 	// ======== ЭЛЕМЕНТЫ ========
 	const slider = document.getElementById('volumeSlider');
-	const sliderFill = document.getElementById('sliderFill');
 	const volumeValue = document.getElementById('volumeValue');
 	const muteBtn = document.getElementById('muteBtn');
 	const resetBtn = document.getElementById('resetBtn');
@@ -65,7 +64,7 @@
 		const displayVol = state.muted ? 0 : state.volume;
 
 		slider.value = displayVol;
-		sliderFill.style.width = (displayVol / 2) + '%';
+		slider.style.setProperty('--progress', (displayVol / 2) + '%');
 
 		volumeValue.textContent = formatValue(displayVol, state.displayMode);
 		volumeValue.classList.toggle('muted', state.muted);
@@ -275,6 +274,7 @@
 		});
 	});
 
+	// TODO: create custom color picker
 	if (colorPicker) {
 		colorPicker.addEventListener('input', async () => {
 			state.accentColor = colorPicker.value;
