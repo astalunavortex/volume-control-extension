@@ -5,6 +5,18 @@
 	<link rel="stylesheet" href="popup.css">
 </head>
 <body>
+	<svg style="display: none;">
+		<symbol id="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+			<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+		</symbol>
+		<symbol id="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+			<line x1="23" y1="9" x2="17" y2="15"/>
+			<line x1="17" y1="9" x2="23" y2="15"/>
+		</symbol>
+	</svg>
+
 	<div class="header">
 		<button class="settings-btn" id="settingsBtn" title="Настройки">
 			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -24,11 +36,10 @@
 
 	<div class="controls">
 		<button class="btn btn-mute" id="muteBtn">
-			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-				<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+			<svg width="14" height="14">
+				<use id="muteIcon" href="#icon-unmuted"/>
 			</svg>
-			Mute
+			<span id="muteText">Mute</span>
 		</button>
 		<button class="btn btn-reset" id="resetBtn">
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -58,8 +69,8 @@
 		<div class="setting-row">
 			<span class="setting-label">Accent color</span>
 			<div class="color-picker-wrapper">
-				<input type="color" id="colorPicker" value="#eae0ff">
-				<span class="color-value" id="colorValue">#EAE0FF</span>
+				<div class="color-swatch" id="colorSwatch"></div>
+				<input type="text" id="colorValue" value="#eae0ff" maxlength="7" spellcheck="false">
 			</div>
 		</div>
 	</div>

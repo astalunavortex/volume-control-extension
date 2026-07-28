@@ -8,8 +8,9 @@
 	const settingsPanel = document.getElementById('settingsPanel');
 	const modeOptions = document.querySelectorAll('.mode-option');
 	const presets = document.querySelectorAll('.preset');
-	const colorPicker = document.getElementById('colorPicker');
 	const colorValue = document.getElementById('colorValue');
+	const muteIcon = document.getElementById('muteIcon');
+	const muteText = document.getElementById('muteText');
 
 	// ======== СОСТОЯНИЕ ========
 	let state = {
@@ -55,8 +56,7 @@
 		const style = document.documentElement.style;
 		style.setProperty('--accent', color);
 		style.setProperty('--accent-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
-		if (colorPicker) colorPicker.value = color;
-		if (colorValue) colorValue.textContent = color.toUpperCase();
+		if (colorValue) colorValue.value = color.toUpperCase();
 	}
 
 	// ======== ОБНОВЛЕНИЕ UI ========
@@ -70,9 +70,8 @@
 		volumeValue.classList.toggle('muted', state.muted);
 
 		muteBtn.classList.toggle('muted', state.muted);
-		muteBtn.innerHTML = state.muted 
-			? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> Unmute`
-			: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> Mute`;
+		muteIcon.setAttribute('href', state.muted ? '#icon-muted' : '#icon-unmuted');
+		muteText.textContent = state.muted ? 'Unmute' : 'Mute';
 
 		presets.forEach(p => {
 			const val = parseInt(p.dataset.value);
@@ -274,13 +273,38 @@
 		});
 	});
 
-	// TODO: create custom color picker
-	if (colorPicker) {
-		colorPicker.addEventListener('input', async () => {
-			state.accentColor = colorPicker.value;
-			applyAccentColor(state.accentColor);
-			await saveSettings();
-		});
+	if (colorValue) {
+    	colorValue.addEventListener('input', async () => {
+    	    let color = colorValue.value.trim();
+
+    	    if (color.match(/^[0-9a-fA-F]{6}$/)) {
+    	        color = '#' + color;
+    	    }
+
+    	    const hexRegex = /^#([0-9a-fA-F]{6})$/;
+    	    if (!hexRegex.test(color)) {
+    	        return;
+    	    }
+
+    	    state.accentColor = color;
+    	    applyAccentColor(state.accentColor);
+    	    await saveSettings();
+    	});
+
+    	colorValue.addEventListener('blur', () => {
+    	    let color = colorValue.value.trim();
+
+    	    if (color.match(/^[0-9a-fA-F]{6}$/)) {
+    	        color = '#' + color;
+    	    }
+
+    	    const hexRegex = /^#([0-9a-fA-F]{6})$/;
+    	    if (hexRegex.test(color)) {
+    	        colorValue.value = color.toUpperCase();
+    	    } else {
+    	        colorValue.value = state.accentColor.toUpperCase();
+    	    }
+    	});
 	}
 
 	browser.tabs.onRemoved.addListener(async (tabId) => {

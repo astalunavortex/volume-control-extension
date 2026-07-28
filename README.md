@@ -22,14 +22,13 @@
 
 ### Firefox
 
-1. Откройте `about:debugging#/runtime/this-firefox`
-2. Нажмите **Загрузить временное дополнение**
-3. Выберите файл `manifest.json` в папке расширения
+1. Откройте `https://addons.mozilla.org/firefox/addon/volume-control-astalunavortex/`
+2. Нажмите **Добавить в Firefox**
 
 ## Требования
 
 - **Chromium 88+**
-- **Firefox 106+**
+- **Firefox 142+**
 
 ## Лицензия
 
