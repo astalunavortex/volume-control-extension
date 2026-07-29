@@ -271,6 +271,7 @@ input[type="text"]#colorValue {
 	text-transform: uppercase;
 	outline: none;
 	transition: border-color 0.2s;
+	text-align: center;
 }
 
 input[type="text"]#colorValue:focus {
