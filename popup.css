@@ -277,3 +277,19 @@ input[type="text"]#colorValue {
 input[type="text"]#colorValue:focus {
 	border-color: rgba(var(--accent-rgb), 0.5);
 }
+
+.version-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.version-label {
+	font-size: 11px;
+	color: #888;
+}
+
+.version-number {
+	font-size: 11px;
+	color: #888;
+}
