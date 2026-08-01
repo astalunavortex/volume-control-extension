@@ -18,7 +18,7 @@
 		muted: false,
 		prevVolume: 100,
 		displayMode: 'percent',
-		accentColor: '#eae0ff',
+		accentColor: '#eaeaea',
 		tabId: null
 	};
 
@@ -195,7 +195,7 @@
 		}
 
 		state.displayMode = result.vc_displayMode || 'percent';
-		state.accentColor = result.vc_accentColor || '#eae0ff';
+		state.accentColor = result.vc_accentColor || '#eaeaea';
 		applyAccentColor(state.accentColor);
 	}
 

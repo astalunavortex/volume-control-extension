@@ -1,6 +1,6 @@
 :root {
-	--accent: #eae0ff;
-	--accent-rgb: 234, 224, 255;
+	--accent: #eaeaea;
+	--accent-rgb: 234, 234, 234;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
