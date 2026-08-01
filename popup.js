@@ -8,6 +8,7 @@
 	const settingsPanel = document.getElementById('settingsPanel');
 	const modeOptions = document.querySelectorAll('.mode-option');
 	const presets = document.querySelectorAll('.preset');
+	const colorSwatch = document.getElementById("colorSwatch")
 	const colorValue = document.getElementById('colorValue');
 	const muteIcon = document.getElementById('muteIcon');
 	const muteText = document.getElementById('muteText');
@@ -219,7 +220,6 @@
 	}
 
 	// ======== ОБРАБОТЧИКИ ========
-
 	slider.addEventListener('input', async () => {
 		state.volume = parseInt(slider.value);
 		if (state.muted && state.volume > 0) {
@@ -272,6 +272,14 @@
 			await saveSettings();
 		});
 	});
+
+	if (colorSwatch) {
+		colorSwatch.addEventListener('click', async () => {
+			state.accentColor = '#eaeaea';
+			applyAccentColor(state.accentColor);
+			await saveSettings();
+		});
+	}
 
 	if (colorValue) {
     	colorValue.addEventListener('input', async () => {

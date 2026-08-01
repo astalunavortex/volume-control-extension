@@ -222,40 +222,16 @@ input[type="range"]::-moz-range-thumb {
 	gap: 8px;
 }
 
-input[type="color"] {
+.color-swatch {
 	appearance: none;
 	-webkit-appearance: none;
 	width: 28px;
 	height: 28px;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
-	background: none;
-	padding: 0;
-}
-
-input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
-}
-
-input[type="color"]::-webkit-color-swatch {
 	border: 1px solid rgba(255,255,255,0.15);
 	border-radius: 6px;
-}
-
-.color-picker-wrapper {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.color-swatch {
-	width: 28px;
-	height: 28px;
-	border-radius: 6px;
-	border: 1px solid rgba(255,255,255,0.15);
 	flex-shrink: 0;
 	background: var(--accent);
+	padding: 0;
 }
 
 input[type="text"]#colorValue {
