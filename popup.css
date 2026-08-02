@@ -232,6 +232,16 @@ input[type="range"]::-moz-range-thumb {
 	flex-shrink: 0;
 	background: var(--accent);
 	padding: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: transparent;
+	transition: color 0.2s;
+}
+
+.color-swatch:hover {
+	color: #000;
 }
 
 input[type="text"]#colorValue {
