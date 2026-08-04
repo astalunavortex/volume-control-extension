@@ -220,20 +220,14 @@
 	}
 
 	// ======== ОБРАБОТЧИКИ ========
-	let debounceTimer;
-
 	slider.addEventListener('input', async () => {
 		state.volume = parseInt(slider.value);
 		if (state.muted && state.volume > 0) {
 			state.muted = false;
 		}
 		updateUI();
-
-		clearTimeout(debounceTimer);
-		debounceTimer = setTimeout(async () => {
-			await applyVolume();
-			await saveTabVolume();
-		}, 25);
+		await applyVolume();
+		await saveTabVolume();
 	});
 
 	muteBtn.addEventListener('click', async () => {
