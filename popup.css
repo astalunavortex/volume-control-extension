@@ -280,24 +280,45 @@ input[type="text"]#colorValue:focus {
 	color: #888;
 }
 
-.dissabled,
-.dissabled * {
-	pointer-events: none !important;
-	cursor: not-allowed !important;
-}
-
 .slider-container.disabled input[type="range"] {
-	opacity: 0.3;
+	background: linear-gradient(to right, #444 0%, #444 var(--progress, 50%), rgba(255,255,255,0.06) var(--progress, 50%), rgba(255,255,255,0.06) 100%);
+	cursor: not-allowed;
 }
 
-.controls.disabled .btn {
-	opacity: 0.3;
-	border-color: rgba(255,255,255,0.04);
-	color: #444;
+.slider-container.disabled input[type="range"]::-webkit-slider-thumb {
+	background: #444;
+	transform: none;
+	cursor: not-allowed;
 }
 
+.slider-container.disabled input[type="range"]::-moz-range-thumb {
+	background: #444;
+	transform: none;
+	cursor: not-allowed;
+}
+
+.slider-container.disabled input[type="range"]::-moz-range-progress {
+	background: transparent;
+}
+
+.controls.disabled .btn,
 .presets.disabled .preset {
-	opacity: 0.3;
 	border-color: rgba(255,255,255,0.04);
 	color: #444;
+	background: transparent;
+	cursor: not-allowed;
+}
+
+.controls.disabled .btn:hover,
+.presets.disabled .preset:hover {
+	border-color: rgba(255,255,255,0.04);
+	color: #444;
+	background: transparent;
+	transform: none;
+}
+
+.controls.disabled .btn.muted {
+	border-color: rgba(255,255,255,0.04);
+	color: #444;
+	background: transparent;
 }
