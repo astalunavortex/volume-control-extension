@@ -24,6 +24,9 @@
 	const colorValue = document.getElementById('colorValue');
 	const muteIcon = document.getElementById('muteIcon');
 	const muteText = document.getElementById('muteText');
+	const sliderContainer = document.querySelector('.slider-container');
+	const controls = document.querySelector('.controls');
+	const presetsContainer = document.querySelector('.presets');
 
 	// ======== СОСТОЯНИЕ ========
 	let state = {
@@ -70,6 +73,25 @@
 		style.setProperty('--accent', color);
 		style.setProperty('--accent-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
 		if (colorValue) colorValue.value = color.toUpperCase();
+	}
+
+	function setControlsEnabled(enabled) {
+		const method = enabled ? 'remove' : 'add';
+
+		sliderContainer.classList[method]('disabled');
+		controls.classList[method]('disabled');
+		presetsContainer.classList[method]('disabled');
+
+		slider.disabled = !enabled;
+		muteBtn.disabled = !enabled;
+		resetBtn.disabled = !enabled;
+		presets.forEach(p => p.disabled = !enabled);
+
+		if (!enabled) {
+			volumeValue.style.color = '#444';
+		} else {
+			volumeValue.style.color = '';
+		}
 	}
 
 	// ======== ОБНОВЛЕНИЕ UI ========
@@ -294,42 +316,48 @@
 	}
 
 	if (colorValue) {
-    	colorValue.addEventListener('input', async () => {
-    	    let color = colorValue.value.trim();
+		colorValue.addEventListener('input', async () => {
+			let color = colorValue.value.trim();
 
-    	    if (color.match(/^[0-9a-fA-F]{6}$/)) {
-    	        color = '#' + color;
-    	    }
+			if (color.match(/^[0-9a-fA-F]{6}$/)) {
+				color = '#' + color;
+			}
 
-    	    const hexRegex = /^#([0-9a-fA-F]{6})$/;
-    	    if (!hexRegex.test(color)) {
-    	        return;
-    	    }
+			const hexRegex = /^#([0-9a-fA-F]{6})$/;
+			if (!hexRegex.test(color)) {
+				return;
+			}
 
-    	    state.accentColor = color;
-    	    applyAccentColor(state.accentColor);
-    	    await saveSettings();
-    	});
+			state.accentColor = color;
+			applyAccentColor(state.accentColor);
+			await saveSettings();
+		});
 
-    	colorValue.addEventListener('blur', () => {
-    	    let color = colorValue.value.trim();
+		colorValue.addEventListener('blur', () => {
+			let color = colorValue.value.trim();
 
-    	    if (color.match(/^[0-9a-fA-F]{6}$/)) {
-    	        color = '#' + color;
-    	    }
+			if (color.match(/^[0-9a-fA-F]{6}$/)) {
+				color = '#' + color;
+			}
 
-    	    const hexRegex = /^#([0-9a-fA-F]{6})$/;
-    	    if (hexRegex.test(color)) {
-    	        colorValue.value = color.toUpperCase();
-    	    } else {
-    	        colorValue.value = state.accentColor.toUpperCase();
-    	    }
-    	});
+			const hexRegex = /^#([0-9a-fA-F]{6})$/;
+			if (hexRegex.test(color)) {
+				colorValue.value = color.toUpperCase();
+			} else {
+				colorValue.value = state.accentColor.toUpperCase();
+			}
+		});
 	}
 
 	// ======== ИНИЦИАЛИЗАЦИЯ ========
 	await loadTabVolume();
 	updateUI();
-	await applyVolume();
+
+	if (isBlocked) {
+		setControlsEnabled(false)
+	} else {
+		setControlsEnabled(true)
+		await applyVolume();
+	}
 
 })();
