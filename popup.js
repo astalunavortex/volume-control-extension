@@ -1,4 +1,16 @@
 (async function() {
+	// ======== ПРОВЕРКА ДОСТУПНОСТИ СТАРНИЦЫ ========
+	const BLOCKED_PREFIXES = [
+		'chrome://', 'chrome-extentions://', 'chrome-devtools://',
+		'brave://',
+		'about:', 'resource://', 'moz-extentions://',
+		'file://', 'data:', 'blob:', 'javascript:', 'view-source:'
+	];
+
+	const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+	const currentUrl = tab?.url || '';
+	const isBlocked = BLOCKED_PREFIXES.some(prefix => currentUrl.startsWith(prefix));
+
 	// ======== ЭЛЕМЕНТЫ ========
 	const slider = document.getElementById('volumeSlider');
 	const volumeValue = document.getElementById('volumeValue');
