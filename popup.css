@@ -279,3 +279,25 @@ input[type="text"]#colorValue:focus {
 	font-size: 11px;
 	color: #888;
 }
+
+.dissabled,
+.dissabled * {
+	pointer-events: none !important;
+	cursor: not-allowed !important;
+}
+
+.slider-container.disabled input[type="range"] {
+	opacity: 0.3;
+}
+
+.controls.disabled .btn {
+	opacity: 0.3;
+	border-color: rgba(255,255,255,0.04);
+	color: #444;
+}
+
+.presets.disabled .preset {
+	opacity: 0.3;
+	border-color: rgba(255,255,255,0.04);
+	color: #444;
+}
