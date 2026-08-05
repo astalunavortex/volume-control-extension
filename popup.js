@@ -354,9 +354,9 @@
 	updateUI();
 
 	if (isBlocked) {
-		setControlsEnabled(false)
+		setControlsEnabled(false);
 	} else {
-		setControlsEnabled(true)
+		setControlsEnabled(true);
 		await applyVolume();
 	}
 
