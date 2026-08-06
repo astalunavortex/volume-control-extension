@@ -1,9 +1,9 @@
 (async function() {
 	// ======== ПРОВЕРКА ДОСТУПНОСТИ СТАРНИЦЫ ========
 	const BLOCKED_PREFIXES = [
-		'chrome://', 'chrome-extentions://', 'chrome-devtools://',
+		'chrome://', 'chrome-extension://', 'chrome-devtools://',
 		'brave://',
-		'about:', 'resource://', 'moz-extentions://',
+		'about:', 'resource://', 'moz-extension://',
 		'file://', 'data:', 'blob:', 'javascript:', 'view-source:'
 	];
 
