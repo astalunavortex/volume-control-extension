@@ -239,6 +239,11 @@
 		applyAccentColor(state.accentColor);
 	}
 
+	function loadVersionNumber() {
+		const manifest = browser.runtime.getManifest();
+		document.querySelector('.version-number').textContent = manifest.version;
+	}
+
 	async function saveTabVolume() {
 		if (!state.tabId) return;
 		const key = `vc_tab_${state.tabId}`;
@@ -356,6 +361,7 @@
 
 	// ======== ИНИЦИАЛИЗАЦИЯ ========
 	await loadTabVolume();
+	loadVersionNumber()
 	updateUI();
 
 	if (isBlocked) {
