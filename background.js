@@ -2,9 +2,12 @@ browser.tabs.onRemoved.addListener(async (tabId) => {
 	await browser.storage.local.remove(`vc_tab_${tabId}`);
 });
 
+browser.tabs.onReplaced.addListener(async (addedTabId, removedTabId) => {
+	await browser.storage.local.remove(`vc_tab_${removedTabId}`);
+});
+
 browser.runtime.onStartup.addListener(cleanupDeadTabs);
 browser.runtime.onInstalled.addListener(cleanupDeadTabs);
-browser.runtime.onReplaced.addListener(cleanupDeadTabs);
 
 async function cleanupDeadTabs() {
 	const allStorage = await browser.storage.local.get();
