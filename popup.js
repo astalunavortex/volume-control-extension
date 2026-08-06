@@ -166,7 +166,12 @@
 
 					const now = ctx.currentTime;
 					gainNode.gain.cancelScheduledValues(now);
-					gainNode.gain.setTargetAtTime(targetGain, now, 0.05);
+
+					if (targetGain == 0) {
+						gainNode.gain.setValueAtTime(targetGain, now);
+					} else {
+						gainNode.gain.setTargetAtTime(targetGain, now, 0.05);
+					}
 
 					if (!window.__vcObserver) {
 						window.__vcObserver = new MutationObserver((mutations) => {
