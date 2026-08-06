@@ -3,6 +3,7 @@ browser.tabs.onRemoved.addListener(async (tabId) => {
 });
 
 browser.runtime.onStartup.addListener(cleanupDeadTabs);
+browser.runtime.onInstalled.addListener(cleanupDeadTabs);
 
 async function cleanupDeadTabs() {
 	const allStorage = await browser.storage.local.get();
