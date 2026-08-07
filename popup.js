@@ -246,14 +246,18 @@
 
 	async function saveTabVolume() {
 		if (!state.tabId) return;
-		const key = `vc_tab_${state.tabId}`;
-		await browser.storage.local.set({
-			[key]: {
-				volume: state.volume,
-				muted: state.muted,
-				prevVolume: state.prevVolume
-			}
-		});
+		try {
+			const key = `vc_tab_${state.tabId}`;
+			await browser.storage.local.set({
+				[key]: {
+					volume: state.volume,
+					muted: state.muted,
+					prevVolume: state.prevVolume
+				}
+			});
+		} catch(err) {
+			console.error('VC: failed to save tab volume', err);
+		}
 	}
 
 	async function saveSettings() {
