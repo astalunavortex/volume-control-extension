@@ -127,11 +127,14 @@
 		try {
 			await browser.scripting.executeScript({
 				target: { tabId: state.tabId },
-				func: (targetGain) => {
+				func: async (targetGain) => {
 					if (!window.__vcAudioCtx) {
 						window.__vcAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
 					}
 					const ctx = window.__vcAudioCtx;
+					if (ctx.state === 'suspended') {
+						ctx.resume();
+					}
 
 					if (!window.__vcGainNode) {
 						window.__vcGainNode = ctx.createGain();
