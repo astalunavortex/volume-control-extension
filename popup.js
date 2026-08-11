@@ -219,8 +219,8 @@
 				},
 				args: [targetGain]
 			});
-		} catch (err) {
-			console.error('Volume control error:', err);
+		} catch (e) {
+			console.error('Volume control error:', e);
 		}
 	}
 
@@ -264,8 +264,8 @@
 					prevVolume: state.prevVolume
 				}
 			});
-		} catch(err) {
-			console.error('VC: failed to save tab volume', err);
+		} catch (e) {
+			console.error('VC: Failed to save tab volume', e);
 		}
 	}
 

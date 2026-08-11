@@ -22,7 +22,7 @@ async function cleanupDeadTabs() {
 		if (deadKeys.length > 0) {
 			await browser.storage.local.remove(deadKeys);
 		}
-	} catch(err) {
-		console.error('VC: cleanup failed', err);
+	} catch(e) {
+		console.error('VC: Failed to cleanup dead tabs:', e);
 	}
 }
