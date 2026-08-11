@@ -133,7 +133,7 @@
 					}
 					const ctx = window.__vcAudioCtx;
 					if (ctx.state === 'suspended') {
-						ctx.resume();
+						await ctx.resume();
 					}
 
 					if (!window.__vcGainNode) {
