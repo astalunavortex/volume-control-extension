@@ -205,7 +205,9 @@
 									source.connect(gainNode);
 									el.__vcConnected = true;
 									el.__vcSource = source;
-								} catch (e) {}
+								} catch (e) {
+									console.warn('VC: Failed to connect media element:', e);
+								}
 							});
 						});
 
