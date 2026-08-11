@@ -131,9 +131,15 @@
 					if (!window.__vcAudioCtx) {
 						window.__vcAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
 					}
+
 					const ctx = window.__vcAudioCtx;
-					if (ctx.state === 'suspended') {
-						await ctx.resume();
+
+					try {
+						if (ctx.state === 'suspended') {
+							await ctx.resume();
+						}
+					} catch (e) {
+						console.error('VC: Failed to resume AudioContext:', e);
 					}
 
 					if (!window.__vcGainNode) {
