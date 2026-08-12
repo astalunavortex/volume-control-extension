@@ -139,7 +139,7 @@
 							await ctx.resume();
 						}
 					} catch (e) {
-						console.error('VC: Failed to resume AudioContext:', e);
+						console.error('Volume Control Extension: failed to resume AudioContext:', e);
 					}
 
 					if (!window.__vcGainNode) {
@@ -169,7 +169,7 @@
 							el.__vcConnected = true;
 							el.__vcSource = source;
 						} catch (e) {
-							console.warn('VC: Failed to connect media element:', e);
+							console.warn('Volume Control Extension: failed to connect media element:', e);
 						}
 					});
 
@@ -206,7 +206,7 @@
 									el.__vcConnected = true;
 									el.__vcSource = source;
 								} catch (e) {
-									console.warn('VC: Failed to connect media element:', e);
+									console.warn('Volume Control Extension: failed to connect media element:', e);
 								}
 							});
 						});
@@ -222,7 +222,7 @@
 				args: [targetGain]
 			});
 		} catch (e) {
-			console.error('Volume control error:', e);
+			console.error('Volume Control Extension error:', e);
 		}
 	}
 
@@ -267,7 +267,7 @@
 				}
 			});
 		} catch (e) {
-			console.error('VC: Failed to save tab volume', e);
+			console.error('Volume Control Extension: failed to save tab volume', e);
 		}
 	}
 
