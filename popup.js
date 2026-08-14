@@ -20,7 +20,7 @@
 	const settingsPanel = document.getElementById('settingsPanel');
 	const modeOptions = document.querySelectorAll('.mode-option');
 	const presets = document.querySelectorAll('.preset');
-	const colorSwatch = document.getElementById("colorSwatch")
+	const colorSwatch = document.getElementById("colorSwatch");
 	const colorValue = document.getElementById('colorValue');
 	const muteIcon = document.getElementById('muteIcon');
 	const muteText = document.getElementById('muteText');
@@ -376,7 +376,7 @@
 
 	// ======== ИНИЦИАЛИЗАЦИЯ ========
 	await loadTabVolume();
-	loadVersionNumber()
+	loadVersionNumber();
 	updateUI();
 
 	if (isBlocked) {
