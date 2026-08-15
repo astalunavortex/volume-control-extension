@@ -290,7 +290,7 @@
 	muteBtn.addEventListener('click', async () => {
 		if (state.muted) {
 			state.muted = false;
-			state.volume = state.prevVolume || 100;
+			state.volume = normalizeVolume(state.prevVolume, 100);
 		} else {
 			state.prevVolume = state.volume;
 			state.muted = true;
