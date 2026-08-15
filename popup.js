@@ -167,7 +167,6 @@
 							const source = ctx.createMediaElementSource(el);
 							source.connect(gainNode);
 							el.__vcConnected = true;
-							el.__vcSource = source;
 						} catch (e) {
 							console.warn('Volume Control Extension: failed to connect media element:', e);
 						}
@@ -204,7 +203,6 @@
 									const source = ctx.createMediaElementSource(el);
 									source.connect(gainNode);
 									el.__vcConnected = true;
-									el.__vcSource = source;
 								} catch (e) {
 									console.warn('Volume Control Extension: failed to connect media element:', e);
 								}
