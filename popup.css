@@ -322,3 +322,5 @@ input[type="text"]#colorValue:focus {
 	color: #444;
 	background: transparent;
 }
+
+.volume-value.disabled { color: #444; }

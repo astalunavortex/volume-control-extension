@@ -76,22 +76,15 @@
 	}
 
 	function setControlsEnabled(enabled) {
-		const method = enabled ? 'remove' : 'add';
-
-		sliderContainer.classList[method]('disabled');
-		controls.classList[method]('disabled');
-		presetsContainer.classList[method]('disabled');
+		sliderContainer.classList.toggle('disabled', !enabled);
+		controls.classList.toggle('disabled', !enabled);
+		presetsContainer.classList.toggle('disabled', !enabled);
+		volumeValue.classList.toggle('disabled', !enabled);
 
 		slider.disabled = !enabled;
 		muteBtn.disabled = !enabled;
 		resetBtn.disabled = !enabled;
 		presets.forEach(p => p.disabled = !enabled);
-
-		if (!enabled) {
-			volumeValue.style.color = '#444';
-		} else {
-			volumeValue.style.color = '';
-		}
 	}
 
 	// ======== ОБНОВЛЕНИЕ UI ========
