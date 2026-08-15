@@ -111,6 +111,10 @@
 		});
 	}
 
+	function normalizeVolume(value, fallback = 100) {
+		return (Number.isFinite(value) && value >= 0 && value <= 200) ? Math.round(value) : fallback;
+	}
+
 	// ======== ПРИМЕНЕНИЕ К СТРАНИЦЕ ========
 	async function applyVolume() {
 		if (!state.tabId) return;
@@ -231,7 +235,7 @@
 			const prev = result[key].prevVolume;
 			state.volume = (Number.isFinite(v) && v >= 0 && v <= 200) ? Math.round(v) : 100;
 			state.muted = !!result[key].muted;
-			state.prevVolume = (Number.isFinite(prev) && prev >= 0 && prev <= 200) ? Math.round(prev) : state.volume;
+			state.prevVolume = normalizeVolume(prev, state.volume)
 		} else {
 			state.volume = 100;
 			state.muted = false;
