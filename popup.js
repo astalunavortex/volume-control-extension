@@ -233,9 +233,9 @@
 		if (result[key]) {
 			const v = result[key].volume;
 			const prev = result[key].prevVolume;
-			state.volume = (Number.isFinite(v) && v >= 0 && v <= 200) ? Math.round(v) : 100;
+			state.volume = normalizeVolume(v, 100);
 			state.muted = !!result[key].muted;
-			state.prevVolume = normalizeVolume(prev, state.volume)
+			state.prevVolume = normalizeVolume(prev, state.volume);
 		} else {
 			state.volume = 100;
 			state.muted = false;
