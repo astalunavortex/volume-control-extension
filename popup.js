@@ -236,17 +236,20 @@
 		const result = await browser.storage.local.get([key, 'vc_displayMode', 'vc_accentColor']);
 
 		if (result[key]) {
-			state.volume = result[key].volume ?? 100;
-			state.muted = result[key].muted ?? false;
-			state.prevVolume = result[key].prevVolume ?? 100;
+			const v = result[key].volume;
+			const prev = result[key].prevVolume;
+			state.volume = (Number.isFinite(v) && v >= 0 && v <= 200) ? Math.round(v) : 100;
+			state.muted = !!result[key].muted;
+			state.prevVolume = (Number.isFinite(prev) && prev >= 0 && prev <= 200) ? Math.round(prev) : state.volume;
 		} else {
 			state.volume = 100;
 			state.muted = false;
 			state.prevVolume = 100;
 		}
 
-		state.displayMode = result.vc_displayMode || 'percent';
-		state.accentColor = result.vc_accentColor || '#eaeaea';
+		state.displayMode = result.vc_displayMode === 'db' ? 'db' : 'percent';
+		const hex = /^#[0-9a-fA-F]{6}$/.test(result.vc_accentColor) ? result.vc_accentColor : '#eaeaea';
+		state.accentColor = hex;
 		applyAccentColor(state.accentColor);
 	}
 
