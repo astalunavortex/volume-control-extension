@@ -48,10 +48,14 @@
 
 	function formatValue(percent, mode) {
 		if (state.muted) {
-			return mode === 'percent' ? '0%' : '-∞ dB';
+			if (mode === 'percent') return '0%';
+			if (mode === 'decimal') return '0.00';
+			return '-∞ dB';
 		}
 		if (mode === 'percent') {
 			return percent + '%';
+		} else if (mode === 'decimal') {
+			return (percent / 100).toFixed(2);
 		} else {
 			const db = percentToDb(percent);
 			if (db === -Infinity) return '-∞ dB';
@@ -241,7 +245,9 @@
 			state.prevVolume = 100;
 		}
 
-		state.displayMode = result.vc_displayMode === 'db' ? 'db' : 'percent';
+		const mode = result.vc_displayMode;
+		state.displayMode = (mode === 'db' || mode === 'decimal') ? mode : 'percent';
+
 		const hex = /^#[0-9a-fA-F]{6}$/.test(result.vc_accentColor) ? result.vc_accentColor : '#eaeaea';
 		state.accentColor = hex;
 		applyAccentColor(state.accentColor);
