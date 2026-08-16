@@ -222,8 +222,7 @@
 	}
 
 	// ======== СОХРАНЕНИЕ/ЗАГРУЗКА ========
-	async function loadTabVolume() {
-		const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+	async function loadTabVolume(tab) {
 		if (!tab?.id) return;
 		state.tabId = tab.id;
 
@@ -373,7 +372,7 @@
 	}
 
 	// ======== ИНИЦИАЛИЗАЦИЯ ========
-	await loadTabVolume();
+	await loadTabVolume(tab);
 	loadVersionNumber();
 	updateUI();
 
