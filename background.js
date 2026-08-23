@@ -27,6 +27,6 @@ async function cleanupDeadTabs() {
 			await browser.storage.local.remove(deadKeys);
 		}
 	} catch(e) {
-		console.error('Volume Control Extension: failed to cleanup dead tabs:', e);
+		console.error('Volume Control Extension failed to cleanup dead tabs:', e);
 	}
 }
