@@ -152,6 +152,9 @@
 
 					function collectMedia(root) {
 						const media = [];
+						if (root.nodeType === Node.ELEMENT_NODE && root.matches && root.matches('audio, video')) {
+							media.push(root);
+						}
 						root.querySelectorAll('audio, video').forEach(el => media.push(el));
 						root.querySelectorAll('*').forEach(el => {
 							if (el.shadowRoot) media.push(...collectMedia(el.shadowRoot));
@@ -188,12 +191,7 @@
 							mutations.forEach(mutation => {
 								mutation.addedNodes.forEach(node => {
 									if (node.nodeType === Node.ELEMENT_NODE) {
-										if (node.matches && (node.matches('audio') || node.matches('video'))) {
-											newMedia.push(node);
-										}
-										if (node.querySelectorAll) {
-											node.querySelectorAll('audio, video').forEach(el => newMedia.push(el));
-										}
+										newMedia.push(...collectMedia(node));
 									}
 								});
 							});
