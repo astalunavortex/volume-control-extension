@@ -125,6 +125,15 @@
 
 		const targetGain = state.muted ? 0 : state.volume / 100;
 
+		let frames = [{ frameId: 0 }]
+
+		try {
+			const all = await browser.webNavigation.getAllFrames({ tabId: state.tabId });
+			if (Array.isArray(all) && all.length) frames = all;
+		} catch (e) {
+			console.warn('Volume Control Extension failed to enumerate frames:', e);
+		}
+
 		try {
 			await browser.scripting.executeScript({
 				target: { tabId: state.tabId },
