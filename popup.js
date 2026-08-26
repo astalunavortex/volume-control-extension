@@ -125,112 +125,104 @@
 
 		const targetGain = state.muted ? 0 : state.volume / 100;
 
-		let frames = [{ frameId: 0 }]
-
 		try {
-			const all = await browser.webNavigation.getAllFrames({ tabId: state.tabId });
-			if (Array.isArray(all) && all.length) frames = all;
-		} catch (e) {
-			console.warn('Volume Control Extension failed to enumerate frames:', e);
-		}
+			await browser.scripting.executeScript({
+				target: {
+					tabId: state.tabId,
+					allFrames: true
+				},
+				func: async (targetGain) => {
+					if (!window.__vcAudioCtx) {
+						window.__vcAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+					}
 
-		for (const f of frames) {
-			try {
-				await browser.scripting.executeScript({
-					target: { tabId: state.tabId },
-					func: async (targetGain) => {
-						if (!window.__vcAudioCtx) {
-							window.__vcAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+					const ctx = window.__vcAudioCtx;
+
+					try {
+						if (ctx.state === 'suspended') {
+							await ctx.resume();
 						}
+					} catch (e) {
+						console.error('Volume Control Extension failed to resume AudioContext:', e);
+					}
 
-						const ctx = window.__vcAudioCtx;
+					if (!window.__vcGainNode) {
+						window.__vcGainNode = ctx.createGain();
+						window.__vcGainNode.gain.value = 1.0;
+						window.__vcGainNode.connect(ctx.destination);
+					}
+					const gainNode = window.__vcGainNode;
+
+					function collectMedia(root) {
+						const media = [];
+						if (root.nodeType === Node.ELEMENT_NODE && root.matches && root.matches('audio, video')) {
+							media.push(root);
+						}
+						root.querySelectorAll('audio, video').forEach(el => media.push(el));
+						root.querySelectorAll('*').forEach(el => {
+							if (el.shadowRoot) media.push(...collectMedia(el.shadowRoot));
+						});
+						return media;
+					}
+
+					const allMedia = collectMedia(document);
+
+					allMedia.forEach(el => {
+						if (el.__vcConnected) return;
 
 						try {
-							if (ctx.state === 'suspended') {
-								await ctx.resume();
-							}
+							const source = ctx.createMediaElementSource(el);
+							source.connect(gainNode);
+							el.__vcConnected = true;
 						} catch (e) {
-							console.error('Volume Control Extension failed to resume AudioContext:', e);
+							console.warn('Volume Control Extension failed to connect media element:', e);
 						}
+					});
 
-						if (!window.__vcGainNode) {
-							window.__vcGainNode = ctx.createGain();
-							window.__vcGainNode.gain.value = 1.0;
-							window.__vcGainNode.connect(ctx.destination);
-						}
-						const gainNode = window.__vcGainNode;
+					const now = ctx.currentTime;
+					gainNode.gain.cancelScheduledValues(now);
 
-						function collectMedia(root) {
-							const media = [];
-							if (root.nodeType === Node.ELEMENT_NODE && root.matches && root.matches('audio, video')) {
-								media.push(root);
-							}
-							root.querySelectorAll('audio, video').forEach(el => media.push(el));
-							root.querySelectorAll('*').forEach(el => {
-								if (el.shadowRoot) media.push(...collectMedia(el.shadowRoot));
-							});
-							return media;
-						}
+					if (targetGain == 0) {
+						gainNode.gain.setValueAtTime(targetGain, now);
+					} else {
+						gainNode.gain.setTargetAtTime(targetGain, now, 0.05);
+					}
 
-						const allMedia = collectMedia(document);
-
-						allMedia.forEach(el => {
-							if (el.__vcConnected) return;
-
-							try {
-								const source = ctx.createMediaElementSource(el);
-								source.connect(gainNode);
-								el.__vcConnected = true;
-							} catch (e) {
-								console.warn('Volume Control Extension failed to connect media element:', e);
-							}
-						});
-
-						const now = ctx.currentTime;
-						gainNode.gain.cancelScheduledValues(now);
-
-						if (targetGain == 0) {
-							gainNode.gain.setValueAtTime(targetGain, now);
-						} else {
-							gainNode.gain.setTargetAtTime(targetGain, now, 0.05);
-						}
-
-						if (!window.__vcObserver) {
-							window.__vcObserver = new MutationObserver((mutations) => {
-								const newMedia = [];
-								mutations.forEach(mutation => {
-									mutation.addedNodes.forEach(node => {
-										if (node.nodeType === Node.ELEMENT_NODE) {
-											newMedia.push(...collectMedia(node));
-										}
-									});
-								});
-
-								newMedia.forEach(el => {
-									if (el.__vcConnected) return;
-									try {
-										const source = ctx.createMediaElementSource(el);
-										source.connect(gainNode);
-										el.__vcConnected = true;
-									} catch (e) {
-										console.warn('Volume Control Extension failed to connect media element:', e);
+					if (!window.__vcObserver) {
+						window.__vcObserver = new MutationObserver((mutations) => {
+							const newMedia = [];
+							mutations.forEach(mutation => {
+								mutation.addedNodes.forEach(node => {
+									if (node.nodeType === Node.ELEMENT_NODE) {
+										newMedia.push(...collectMedia(node));
 									}
 								});
 							});
 
-							window.__vcObserver.observe(document.body, {
-								childList: true,
-								subtree: true
+							newMedia.forEach(el => {
+								if (el.__vcConnected) return;
+								try {
+									const source = ctx.createMediaElementSource(el);
+									source.connect(gainNode);
+									el.__vcConnected = true;
+								} catch (e) {
+									console.warn('Volume Control Extension failed to connect media element:', e);
+								}
 							});
-						}
+						});
 
-						return { success: true, elements: allMedia.length, gain: targetGain };
-					},
-					args: [targetGain]
-				});
-			} catch (e) {
-				console.error('Volume Control Extension error:', e);
-			}
+						window.__vcObserver.observe(document.body, {
+							childList: true,
+							subtree: true
+						});
+					}
+
+					return { success: true, elements: allMedia.length, gain: targetGain };
+				},
+				args: [targetGain]
+			});
+		} catch (e) {
+			console.error('Volume Control Extension error:', e);
 		}
 	}
 
